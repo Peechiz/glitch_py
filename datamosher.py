@@ -1,5 +1,5 @@
 # identify i-frames
-# remove all but first i-frame
+# remove all but first i-frame OR delete certain iFrames
 
 """
 
@@ -21,6 +21,7 @@ with open(source_vid+"_moshed", "w") as outfile:
   
   iframes = [] #list of iframes
   
+  #notes about slicing
   """
   list[0:4] returns a slice (another list) of the beginning of the list to the 5th item.
   
@@ -30,7 +31,20 @@ with open(source_vid+"_moshed", "w") as outfile:
     if blam[i] == 'd':
 		  if blam[i:i+12] == 'drop the beat':
 			  print 'sweet wubs' 
-  
   """
   
+  #sudo code
+  """
+  loop through data
+  	if data starts with the right thing:
+  		look for slice. if slice is correct:
+  			continue loop through data for next frame. if next frame:
+  				create slice
+  				add to list of iFrames
+  				
+  option 1: write out new file, skip over any known iFrames
+  option 2: write out everything, delete selected iFrames
+  """
   outfile.write(new_vid)
+  
+readfile.close() #this is necessary, right?
