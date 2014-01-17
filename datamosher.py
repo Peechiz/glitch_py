@@ -23,6 +23,14 @@ with open(source_vid+"_moshed", "w") as outfile:
   
   """
   list[0:4] returns a slice (another list) of the beginning of the list to the 5th item.
+  
+  Below is a test to check for wubs.
+  
+  for i in range(len(blam)):
+    if blam[i] == 'd':
+		  if blam[i:i+12] == 'drop the beat':
+			  print 'sweet wubs' 
+  
   """
   
   outfile.write(new_vid)
