@@ -1,4 +1,5 @@
 from PIL import Image
+import os, sys
 import argparse
 
 class FuckedImg(object):
@@ -21,6 +22,17 @@ class FuckedImg(object):
 		region = region.transpose(Image.FLIP_LEFT_RIGHT)
 		self.im.paste(region, outbox)
 		return self.im
+	def websize(self):
+		size = 800, 800
+		for infile in sys.argv[1:]:
+			outfile = os.path.splitext(infile)[0] + "_web.jpeg"
+			if infile != outfile:
+				try:
+					im = Image.open(infile)
+					im.thumbnail(size)
+					im.save(outfile,"JPEG")
+				except IOError:
+					print("cannot create thumbnail for", infile)
 
 
 def main():
@@ -28,6 +40,7 @@ def main():
 	parser.add_argument("filename", help="choose the file you'd like to glitch")
 	parser.add_argument("-zc", "--ZapChannel", type=int, choices=[0, 1, 2], help="delete a color channel")
 	parser.add_argument("-m", "--mirror", action="store_true", help="mirror image right to left")
+	parser.add_argument("-ws", "--websizer", action="store_true", help="size image for web")
 	args = parser.parse_args()
 	
 	newImage = FuckedImg(args.filename)
@@ -35,6 +48,8 @@ def main():
 		newImage.killChannel(int(args.ZapChannel)).show()
 	if args.mirror:
 		newImage.mirror().show()
+	if args.websizer:
+		newImage.websize()
 
 
 
